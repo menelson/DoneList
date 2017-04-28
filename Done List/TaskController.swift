@@ -18,7 +18,6 @@ class TaskController: NSObject {
     override init() {
         dataController = DataController() {}
         let container: NSPersistentContainer = dataController.getPersistentContainer() as NSPersistentContainer
-//        container.viewContext.automaticallyMergesChangesFromParent = true
         context = container.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
     }
@@ -38,6 +37,11 @@ class TaskController: NSObject {
         let task = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context) as! TaskMO
         task.name = name
         
+        save()
+    }
+    
+    func deleteTask(task: TaskMO) {
+        self.context.delete(task)
         save()
     }
     

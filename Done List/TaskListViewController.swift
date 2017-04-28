@@ -72,7 +72,6 @@ class TaskListViewController: UIViewController {
         
         request.sortDescriptors = [nameSort]
         
-//        let moc = DataController.sharedInstance.getMainManagedObjectContext()
         let moc = TaskController.sharedInstance.context
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -118,6 +117,13 @@ extension TaskListViewController: UITableViewDataSource {
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected: \(indexPath.row)")
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let task = fetchedResultsController?.object(at: indexPath) as? TaskMO
+            TaskController.sharedInstance.deleteTask(task: task!)
+        }
     }
     
 }

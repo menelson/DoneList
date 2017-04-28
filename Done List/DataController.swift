@@ -11,7 +11,6 @@ import CoreData
 
 class DataController: NSObject {
     
-    //var managedObjectContext: NSManagedObjectContext?
     let persistentContainer: NSPersistentContainer
     
     static let sharedInstance = DataController(completionClosure: {})
@@ -25,9 +24,6 @@ class DataController: NSObject {
             if let error = error {
                 fatalError("Failed to load Core Data stack: \(error)")
             }
-            
-            
-//            self.persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
             
             completionClosure()
         }
