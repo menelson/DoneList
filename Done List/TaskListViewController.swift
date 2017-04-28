@@ -26,7 +26,6 @@ class TaskListViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 
@@ -73,7 +72,7 @@ class TaskListViewController: UIViewController {
         request.sortDescriptors = [nameSort]
         
         let moc = TaskController.sharedInstance.context
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
         
         self.fetchedResultsController?.delegate = self
         
@@ -124,6 +123,12 @@ extension TaskListViewController: UITableViewDelegate {
             let task = fetchedResultsController?.object(at: indexPath) as? TaskMO
             TaskController.sharedInstance.deleteTask(task: task!)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = fetchedResultsController?.sections?[section]
+        let title = section?.name
+        return title
     }
     
 }

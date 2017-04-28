@@ -30,18 +30,21 @@ class TaskController: NSObject {
                 fatalError("failed to save: \(error)")
             }
         }
-        
     }
     
     func createNewTask(name: String) {
         let task = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context) as! TaskMO
         task.name = name
-        
+        task.priority = Priority.Normal.rawValue
         save()
     }
     
     func deleteTask(task: TaskMO) {
         self.context.delete(task)
+        save()
+    }
+    
+    func updateTask(task: TaskMO) {
         save()
     }
     
