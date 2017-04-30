@@ -36,6 +36,7 @@ class TaskController: NSObject {
         let task = NSEntityDescription.insertNewObject(forEntityName: "Task", into: context) as! TaskMO
         task.name = name
         task.priority = Priority.Normal.rawValue
+        task.priorityInt = Int32(Priority.Normal.hashValue)
         save()
     }
     

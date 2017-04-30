@@ -29,15 +29,21 @@ class TaskListViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let indexPath = self.tableView?.indexPathForSelectedRow
+        let task = self.fetchedResultsController?.object(at: indexPath!)
+        
+        let detailVC: TaskDetailViewController = segue.destination as! TaskDetailViewController
+        
+        detailVC.task = task as! TaskMO?
     }
-    */
+
     
     @IBAction func didTapAdd(_ sender: Any) {
         let addAlert = UIAlertController(title: "Add a Task",
@@ -68,11 +74,12 @@ class TaskListViewController: UIViewController {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         
         let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        let prioritySort = NSSortDescriptor(key: "priorityInt", ascending: true)
         
-        request.sortDescriptors = [nameSort]
+        request.sortDescriptors = [prioritySort, nameSort]
         
         let moc = TaskController.sharedInstance.context
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "priorityInt", cacheName: nil)
         
         self.fetchedResultsController?.delegate = self
         
@@ -115,20 +122,40 @@ extension TaskListViewController: UITableViewDataSource {
 
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected: \(indexPath.row)")
+        self.performSegue(withIdentifier: "TaskDetailSegue", sender: self)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let task = fetchedResultsController?.object(at: indexPath) as? TaskMO
-            TaskController.sharedInstance.deleteTask(task: task!)
+            if let task = fetchedResultsController?.object(at: indexPath) as? TaskMO {
+                TaskController.sharedInstance.deleteTask(task: task)
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let section = fetchedResultsController?.sections?[section]
-        let title = section?.name
-        return title
+        guard let sectionName = fetchedResultsController?.sections?[section].name else {
+            return "N/A"
+        }
+        
+        var name = "N/A"
+        
+        switch sectionName {
+        case "0":
+            name = Priority.Urgent.rawValue
+            break
+        case "1":
+            name = Priority.High.rawValue
+            break
+        case "2":
+            name = Priority.Normal.rawValue
+            break
+        default:
+            name = Priority.Low.rawValue
+        }
+        
+        return name
+        
     }
     
 }
@@ -147,9 +174,7 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
         case .delete:
             tableView?.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
             break
-        case .update:
-            break
-        case .move:
+        default:
             break
         }
     }
@@ -167,7 +192,8 @@ extension TaskListViewController: NSFetchedResultsControllerDelegate {
             tableView?.reloadRows(at: [indexPath!], with: .fade)
             break
         case .move:
-            tableView?.moveRow(at: indexPath!, to: newIndexPath!)
+            tableView?.deleteRows(at: [indexPath!], with: .fade)
+            tableView?.insertRows(at: [newIndexPath!], with: .fade)
             break
         }
     }
