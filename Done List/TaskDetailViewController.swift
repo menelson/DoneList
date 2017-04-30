@@ -21,11 +21,16 @@ class TaskDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set View title
+        self.title = task?.name
 
+        // Populate textField
         nameTextField?.text = task?.name
-        let position = Int((task?.priorityInt)!)
         
         // PickerView Setup
+        let position = Int((task?.priorityInt)!)
+        
         priorityPicker?.delegate = self
         priorityPicker?.dataSource = self
         priorityPicker?.selectRow(position,
@@ -40,7 +45,6 @@ class TaskDetailViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
    
@@ -67,4 +71,5 @@ extension TaskDetailViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return priorities[row]
     }
+    
 }

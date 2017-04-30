@@ -43,7 +43,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" textLabel="NoE-UJ-PQs" style="IBUITableViewCellStyleDefault" id="Vpv-2C-5RY">
-                                        <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vpv-2C-5RY" id="U99-Sb-W7V">
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
@@ -104,18 +104,26 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiS-Xk-QOt">
+                                <rect key="frame" x="16" y="137" width="59.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jtY-Z3-a2r">
-                                <rect key="frame" x="0.0" y="137" width="375" height="216"/>
+                                <rect key="frame" x="0.0" y="166" width="375" height="216"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="jtY-Z3-a2r" secondAttribute="trailing" id="00B-nn-3Nr"/>
-                            <constraint firstItem="jtY-Z3-a2r" firstAttribute="leading" secondItem="QfL-8B-Qqb" secondAttribute="leading" id="FcI-PC-pnv"/>
-                            <constraint firstItem="McL-hC-1ed" firstAttribute="leading" secondItem="QfL-8B-Qqb" secondAttribute="leadingMargin" id="K9A-Sd-3Tf"/>
-                            <constraint firstItem="jtY-Z3-a2r" firstAttribute="top" secondItem="McL-hC-1ed" secondAttribute="bottom" constant="8" id="Q13-4k-E16"/>
-                            <constraint firstItem="McL-hC-1ed" firstAttribute="top" secondItem="yvT-uk-dW7" secondAttribute="bottom" constant="35" id="Tpi-ZC-P3a"/>
-                            <constraint firstItem="McL-hC-1ed" firstAttribute="trailing" secondItem="QfL-8B-Qqb" secondAttribute="trailingMargin" id="Zej-2R-ai2"/>
+                            <constraint firstItem="jtY-Z3-a2r" firstAttribute="top" secondItem="xiS-Xk-QOt" secondAttribute="bottom" constant="8" id="0ah-6v-Ufc"/>
+                            <constraint firstItem="McL-hC-1ed" firstAttribute="top" secondItem="yvT-uk-dW7" secondAttribute="bottom" constant="35" id="7JZ-tj-taS"/>
+                            <constraint firstItem="McL-hC-1ed" firstAttribute="leading" secondItem="QfL-8B-Qqb" secondAttribute="leadingMargin" id="K8B-ld-nda"/>
+                            <constraint firstItem="McL-hC-1ed" firstAttribute="trailing" secondItem="QfL-8B-Qqb" secondAttribute="trailingMargin" id="RJy-69-slW"/>
+                            <constraint firstItem="jtY-Z3-a2r" firstAttribute="leading" secondItem="QfL-8B-Qqb" secondAttribute="leading" id="cZA-81-wt7"/>
+                            <constraint firstAttribute="trailing" secondItem="jtY-Z3-a2r" secondAttribute="trailing" id="qcJ-0U-p7P"/>
+                            <constraint firstItem="xiS-Xk-QOt" firstAttribute="leading" secondItem="QfL-8B-Qqb" secondAttribute="leadingMargin" id="s5x-MH-oCt"/>
+                            <constraint firstItem="xiS-Xk-QOt" firstAttribute="top" secondItem="McL-hC-1ed" secondAttribute="bottom" constant="8" id="zkL-Tw-05X"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="8qp-n2-slk"/>
