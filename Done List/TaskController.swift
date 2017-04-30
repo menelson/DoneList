@@ -37,6 +37,8 @@ class TaskController: NSObject {
         task.name = name
         task.priority = Priority.Normal.rawValue
         task.priorityInt = Int32(Priority.Normal.hashValue)
+        task.createdDate = Date.init() as NSDate?
+        task.dueDate = Date.distantFuture as NSDate?
         save()
     }
     

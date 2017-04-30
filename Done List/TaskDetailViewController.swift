@@ -12,6 +12,8 @@ class TaskDetailViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField?
     @IBOutlet weak var priorityPicker: UIPickerView?
+    @IBOutlet weak var tableView: UITableView?
+    
     var task: TaskMO?
     
     let priorities = [Priority.Urgent.rawValue,
@@ -36,6 +38,10 @@ class TaskDetailViewController: UIViewController {
         priorityPicker?.selectRow(position,
                                   inComponent: 0,
                                   animated: false)
+        
+        // TableView Setup
+        tableView?.dataSource = self
+        tableView?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +76,44 @@ extension TaskDetailViewController: UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return priorities[row]
+    }
+    
+}
+
+extension TaskDetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell")
+        
+        let createdDate = task?.createdDate as? Date
+        let dueDate = task?.dueDate as? Date
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.timeStyle = .medium
+        
+        
+        if indexPath.row == 0 {
+            cell?.textLabel?.text = "Created: \(dateFormat.string(from: createdDate!))"
+        } else {
+            cell?.textLabel?.text = "Due: \(dateFormat.string(from: dueDate!))"
+            cell?.accessoryType = .disclosureIndicator
+        }
+
+        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+}
+
+extension TaskDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //
     }
     
 }
