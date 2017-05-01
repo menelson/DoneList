@@ -162,11 +162,98 @@
                         <outlet property="nameTextField" destination="McL-hC-1ed" id="ycJ-KG-TRn"/>
                         <outlet property="tableView" destination="y2E-Y4-Cqv" id="ueP-5m-x9r"/>
                         <segue destination="SAE-sO-KJV" kind="presentation" identifier="PrioritySegue" id="EAm-oS-99M"/>
+                        <segue destination="Wa5-fI-ajq" kind="presentation" identifier="DateSegue" id="Whr-gr-Vnh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7w-Aq-tji" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="344.80000000000001" y="71.514242878560722"/>
+        </scene>
+        <!--Date View Controller-->
+        <scene sceneID="N2E-nT-SRR">
+            <objects>
+                <viewController id="Wa5-fI-ajq" customClass="DateViewController" customModule="Done_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="flP-HE-0Nz"/>
+                        <viewControllerLayoutGuide type="bottom" id="yxT-ch-3he"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nr0-62-qPq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NT5-cG-eMZ">
+                                <rect key="frame" x="316" y="28" width="43" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="didTapDone:" destination="Wa5-fI-ajq" eventType="touchUpInside" id="ofc-Es-bZb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ly-Ib-Oy9">
+                                <rect key="frame" x="16" y="28" width="56" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="didTapCancel:" destination="Wa5-fI-ajq" eventType="touchUpInside" id="uBt-zX-4UC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set due date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uw5-JW-bbV">
+                                <rect key="frame" x="16" y="121" width="97.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rr9-VR-3fU">
+                                <rect key="frame" x="16" y="82" width="35" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Age Placeholder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XbO-Ka-dg8">
+                                <rect key="frame" x="59" y="82" width="300" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="XDp-AS-DER">
+                                <rect key="frame" x="0.0" y="150" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="515337470.56166601">
+                                    <!--2017-05-01 13:17:50 +0000-->
+                                </date>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="512733600">
+                                    <!--2017-04-01 10:00:00 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="dueDateChanged:" destination="Wa5-fI-ajq" eventType="valueChanged" id="vDK-xV-pcy"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Uw5-JW-bbV" firstAttribute="leading" secondItem="Nr0-62-qPq" secondAttribute="leadingMargin" id="7gA-jA-ilX"/>
+                            <constraint firstItem="0ly-Ib-Oy9" firstAttribute="leading" secondItem="Nr0-62-qPq" secondAttribute="leadingMargin" id="AYf-1k-zMJ"/>
+                            <constraint firstItem="rr9-VR-3fU" firstAttribute="top" secondItem="0ly-Ib-Oy9" secondAttribute="bottom" constant="20" id="EYT-s2-KgE"/>
+                            <constraint firstItem="XbO-Ka-dg8" firstAttribute="trailing" secondItem="Nr0-62-qPq" secondAttribute="trailingMargin" id="GXF-bG-o5Z"/>
+                            <constraint firstItem="Uw5-JW-bbV" firstAttribute="top" secondItem="XbO-Ka-dg8" secondAttribute="bottom" constant="18" id="Gbl-3P-djj"/>
+                            <constraint firstAttribute="trailing" secondItem="XDp-AS-DER" secondAttribute="trailing" id="K9M-xx-bfE"/>
+                            <constraint firstItem="NT5-cG-eMZ" firstAttribute="trailing" secondItem="Nr0-62-qPq" secondAttribute="trailingMargin" id="NhV-Dp-ITG"/>
+                            <constraint firstItem="XbO-Ka-dg8" firstAttribute="leading" secondItem="rr9-VR-3fU" secondAttribute="trailing" constant="8" id="Oxm-zQ-S8a"/>
+                            <constraint firstItem="NT5-cG-eMZ" firstAttribute="top" secondItem="flP-HE-0Nz" secondAttribute="bottom" constant="8" id="P6A-OW-XAW"/>
+                            <constraint firstItem="XbO-Ka-dg8" firstAttribute="top" secondItem="0ly-Ib-Oy9" secondAttribute="bottom" constant="20" id="dgH-nU-i21"/>
+                            <constraint firstItem="XDp-AS-DER" firstAttribute="leading" secondItem="Nr0-62-qPq" secondAttribute="leading" id="gHH-Zl-Hym"/>
+                            <constraint firstItem="0ly-Ib-Oy9" firstAttribute="top" secondItem="flP-HE-0Nz" secondAttribute="bottom" constant="8" id="lqn-Cx-YTJ"/>
+                            <constraint firstItem="XDp-AS-DER" firstAttribute="top" secondItem="Uw5-JW-bbV" secondAttribute="bottom" constant="8" id="swl-sF-ikb"/>
+                            <constraint firstItem="rr9-VR-3fU" firstAttribute="leading" secondItem="Nr0-62-qPq" secondAttribute="leadingMargin" id="xga-PR-bPv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="ageLabel" destination="XbO-Ka-dg8" id="gcH-p9-RtL"/>
+                        <outlet property="datePicker" destination="XDp-AS-DER" id="9Ww-BF-qEU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qdw-c5-A77" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1388" y="390.85457271364322"/>
         </scene>
         <!--Priority View Controller-->
         <scene sceneID="sJb-f1-0Fp">

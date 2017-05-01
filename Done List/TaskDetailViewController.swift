@@ -46,6 +46,9 @@ class TaskDetailViewController: UIViewController {
         if segue.identifier == "PrioritySegue" {
             let targetVC: PriorityViewController = (segue.destination as? PriorityViewController)!
             targetVC.task = self.task
+        } else if segue.identifier == "DateSegue" {
+            let targetVC: DateViewController = (segue.destination as? DateViewController)!
+            targetVC.task = self.task
         }
     }
     
@@ -63,8 +66,8 @@ class TaskDetailViewController: UIViewController {
             return UITableViewCell()
         }
         
-        let createdDate = task?.createdDate as? Date
-        let dueDate = task?.dueDate as? Date
+        let createdDate = (task?.createdDate) as Date?
+        let dueDate = (task?.dueDate) as Date?
         
         let dateFormat = DateFormatter()
         dateFormat.dateStyle = .medium
@@ -125,6 +128,8 @@ extension TaskDetailViewController: UITableViewDelegate {
         
         if section == 0 {
             self.performSegue(withIdentifier: "PrioritySegue", sender: self)
+        } else if section == 1 && indexPath.row > 0 {
+            self.performSegue(withIdentifier: "DateSegue", sender: self)
         }
     }
     
