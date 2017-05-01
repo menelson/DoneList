@@ -37,7 +37,6 @@ class PriorityViewController: UIViewController {
     }
     
     @IBAction func didTapDone(_ sender: Any) {
-        //TODO:- Add completion to update task
         self.dismiss(animated: true, completion: {
             TaskController.sharedInstance.updateTask(task: self.task!)
         })
