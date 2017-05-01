@@ -11,16 +11,10 @@ import UIKit
 class TaskDetailViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField?
-    @IBOutlet weak var priorityPicker: UIPickerView?
     @IBOutlet weak var tableView: UITableView?
     
     var task: TaskMO?
     
-    let priorities = [Priority.Urgent.rawValue,
-                      Priority.High.rawValue,
-                      Priority.Normal.rawValue,
-                      Priority.Low.rawValue]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,18 +24,13 @@ class TaskDetailViewController: UIViewController {
         // Populate textField
         nameTextField?.text = task?.name
         
-        // PickerView Setup
-        let position = Int((task?.priorityInt)!)
-        
-        priorityPicker?.delegate = self
-        priorityPicker?.dataSource = self
-        priorityPicker?.selectRow(position,
-                                  inComponent: 0,
-                                  animated: false)
-        
         // TableView Setup
         tableView?.dataSource = self
         tableView?.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView?.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,36 +42,26 @@ class TaskDetailViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-   
-}
-
-extension TaskDetailViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("Selected \(priorities[row])")
-        task?.priority = priorities[row]
-        task?.priorityInt = Int32(row)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PrioritySegue" {
+            let targetVC: PriorityViewController = (segue.destination as? PriorityViewController)!
+            targetVC.task = self.task
+        }
     }
     
-}
-
-extension TaskDetailViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+    func setUpPriorityCell(indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView?.dequeueReusableCell(withIdentifier: "PriorityCell") else {
+            return UITableViewCell()
+        }
+        cell.textLabel?.text = task?.priority
+        cell.accessoryType = .disclosureIndicator
+        return cell
     }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return priorities.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return priorities[row]
-    }
-    
-}
-
-extension TaskDetailViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DateCell")
+    func setUpDateCell(indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView?.dequeueReusableCell(withIdentifier: "DateCell") else {
+            return UITableViewCell()
+        }
         
         let createdDate = task?.createdDate as? Date
         let dueDate = task?.dueDate as? Date
@@ -91,29 +70,62 @@ extension TaskDetailViewController: UITableViewDataSource {
         dateFormat.dateStyle = .medium
         dateFormat.timeStyle = .medium
         
-        
         if indexPath.row == 0 {
-            cell?.textLabel?.text = "Created: \(dateFormat.string(from: createdDate!))"
+            cell.textLabel?.text = "Created: \(dateFormat.string(from: createdDate!))"
         } else {
-            cell?.textLabel?.text = "Due: \(dateFormat.string(from: dueDate!))"
-            cell?.accessoryType = .disclosureIndicator
+            cell.textLabel?.text = "Due: \(dateFormat.string(from: dueDate!))"
+            cell.accessoryType = .disclosureIndicator
         }
+        
+        return cell
+    }
+   
+}
 
-        return cell!
+extension TaskDetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: UITableViewCell
+        let section = indexPath.section
+        
+        if section == 0 {
+            cell = setUpPriorityCell(indexPath: indexPath)
+        } else {
+            cell = setUpDateCell(indexPath: indexPath)
+        }
+        
+        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if section == 0 {
+            return 1
+        }
+        
         return 2
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Priority"
+        }
+        
+        return "Dates"
     }
 }
 
 extension TaskDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
+        let section = indexPath.section
+        
+        if section == 0 {
+            self.performSegue(withIdentifier: "PrioritySegue", sender: self)
+        }
     }
     
 }
