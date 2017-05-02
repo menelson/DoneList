@@ -10,8 +10,8 @@ import Foundation
 
 
 enum Priority: String {
-    case Urgent = "Urgent"
-    case High = "High"
-    case Normal = "Normal"
-    case Low = "Low"
+    case Urgent = "Today"
+    case High = "Tomorrow"
+    case Normal = "This Week"
+    case Low = "Who am I kidding"
 }
