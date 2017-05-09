@@ -14,4 +14,5 @@ enum Priority: String {
     case High = "Tomorrow"
     case Normal = "This Week"
     case Low = "Who am I kidding"
+    case Completed = "Completed"
 }

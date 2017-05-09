@@ -15,7 +15,8 @@ class PriorityViewController: UIViewController {
     let priorities = [Priority.Urgent.rawValue,
                       Priority.High.rawValue,
                       Priority.Normal.rawValue,
-                      Priority.Low.rawValue]
+                      Priority.Low.rawValue,
+                      Priority.Completed.rawValue]
     
     var task: TaskMO?
 

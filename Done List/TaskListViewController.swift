@@ -150,8 +150,14 @@ extension TaskListViewController: UITableViewDelegate {
         case "2":
             name = Priority.Normal.rawValue
             break
-        default:
+        case "3":
             name = Priority.Low.rawValue
+            break
+        case "4":
+            name = Priority.Completed.rawValue
+            break
+        default:
+            break
         }
         
         return name
