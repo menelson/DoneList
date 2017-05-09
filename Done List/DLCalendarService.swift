@@ -56,6 +56,10 @@ class DLCalendarService {
     func fetchUserCalendars() -> [EKCalendar] {
         return eventStore.calendars(for: EKEntityType.event)
     }
+    
+    func fetchCalendarById(identifier: String) -> EKCalendar {
+        return eventStore.calendar(withIdentifier: identifier)!
+    }
 
 
 }
