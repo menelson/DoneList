@@ -1,5 +1,5 @@
 //
-//  CalendarDefaults.swift
+//  DLCalendarDefaults.swift
 //  Done List
 //
 //  Created by Mike Nelson on 5/9/17.
@@ -9,7 +9,7 @@
 import Foundation
 import EventKit
 
-class CalendarDefaults {
+class DLCalendarDefaults {
     
     static let calendarKey = "AvailableCalendars"
     

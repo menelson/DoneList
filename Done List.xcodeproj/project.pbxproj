@@ -11,7 +11,7 @@
 		27925FF51EC0A87E0083B8D9 /* DLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */; };
 		27925FF71EC0B5190083B8D9 /* TestDLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */; };
 		27925FF91EC1B9F30083B8D9 /* CalendarSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */; };
-		27925FFB1EC1FE6A0083B8D9 /* CalendarDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FFA1EC1FE6A0083B8D9 /* CalendarDefaults.swift */; };
+		27925FFB1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FFA1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift */; };
 		27E7FF0B1EAE115A004F65B1 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E7FF0A1EAE115A004F65B1 /* TaskListViewController.swift */; };
 		27E7FF0F1EAE2129004F65B1 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27E7FF0D1EAE2129004F65B1 /* Model.xcdatamodeld */; };
 		27E7FF111EAE256D004F65B1 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E7FF101EAE256D004F65B1 /* DataController.swift */; };
@@ -42,7 +42,7 @@
 		27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCalendarService.swift; sourceTree = "<group>"; };
 		27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDLCalendarService.swift; sourceTree = "<group>"; };
 		27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSettingsViewController.swift; sourceTree = "<group>"; };
-		27925FFA1EC1FE6A0083B8D9 /* CalendarDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDefaults.swift; sourceTree = "<group>"; };
+		27925FFA1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCalendarDefaults.swift; sourceTree = "<group>"; };
 		27E7FF0A1EAE115A004F65B1 /* TaskListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		27E7FF0E1EAE2129004F65B1 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		27E7FF101EAE256D004F65B1 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
@@ -86,7 +86,7 @@
 				27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */,
 				27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */,
 				27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */,
-				27925FFA1EC1FE6A0083B8D9 /* CalendarDefaults.swift */,
+				27925FFA1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 				27925FF51EC0A87E0083B8D9 /* DLCalendarService.swift in Sources */,
 				27F3AFC31EB76BD800D8A043 /* DateViewController.swift in Sources */,
 				27925FF11EBBFFC40083B8D9 /* AgendaViewController.swift in Sources */,
-				27925FFB1EC1FE6A0083B8D9 /* CalendarDefaults.swift in Sources */,
+				27925FFB1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift in Sources */,
 				27F3AFBD1EB356E200D8A043 /* Priority.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

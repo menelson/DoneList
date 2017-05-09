@@ -16,7 +16,7 @@ class CalendarSettingsViewController: UIViewController {
     var calendars = [EKCalendar]()
     
     lazy var availableCalenders = { () -> [String] in
-        let defaults = CalendarDefaults.init()
+        let defaults = DLCalendarDefaults.init()
         return defaults.getAvailableCalendars()
     }()
 
@@ -55,7 +55,7 @@ class CalendarSettingsViewController: UIViewController {
                 availableCalenders.remove(at: index)
                 
                 // Remove from defaults
-                let calDefaults = CalendarDefaults.init()
+                let calDefaults = DLCalendarDefaults.init()
                 calDefaults.setAvailableCalendars(calendars: availableCalenders)
             }
         }
@@ -84,7 +84,7 @@ extension CalendarSettingsViewController: UITableViewDelegate {
         } else {
             cell?.accessoryType = .checkmark
             availableCalenders.append(calendars[indexPath.row].calendarIdentifier)
-            let defaults = CalendarDefaults.init()
+            let defaults = DLCalendarDefaults.init()
             defaults.setAvailableCalendars(calendars: availableCalenders)
         }
     }
