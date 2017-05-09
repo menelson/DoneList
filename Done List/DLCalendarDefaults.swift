@@ -22,13 +22,13 @@ class DLCalendarDefaults {
     }
     
     func setAvailableCalendars(calendars: [String]) {
-        sharedUserDefaults.set(calendars, forKey: CalendarDefaults.calendarKey)
+        sharedUserDefaults.set(calendars, forKey: DLCalendarDefaults.calendarKey)
     }
     
     func getAvailableCalendars() -> [String] {
         var calendars = [String]()
         
-        guard let temp = sharedUserDefaults.object(forKey: CalendarDefaults.calendarKey) as? [String] else {
+        guard let temp = sharedUserDefaults.object(forKey: DLCalendarDefaults.calendarKey) as? [String] else {
             return calendars
         }
         

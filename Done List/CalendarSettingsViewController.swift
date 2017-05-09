@@ -72,6 +72,15 @@ class CalendarSettingsViewController: UIViewController {
         return false
     }
     
+    func addCalendarToDefaults(row: Int) {
+        // Add to local
+        availableCalenders.append(calendars[row].calendarIdentifier)
+        
+        // Add to defaults
+        let defaults = DLCalendarDefaults.init()
+        defaults.setAvailableCalendars(calendars: availableCalenders)
+    }
+    
 }
 
 extension CalendarSettingsViewController: UITableViewDelegate {
@@ -83,9 +92,7 @@ extension CalendarSettingsViewController: UITableViewDelegate {
             self.removeCalendarFromAvailable(row: indexPath.row)
         } else {
             cell?.accessoryType = .checkmark
-            availableCalenders.append(calendars[indexPath.row].calendarIdentifier)
-            let defaults = DLCalendarDefaults.init()
-            defaults.setAvailableCalendars(calendars: availableCalenders)
+            addCalendarToDefaults(row: indexPath.row)
         }
     }
 }
