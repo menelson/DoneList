@@ -53,6 +53,14 @@ class AgendaViewController: UIViewController {
         agendaEvents = eventStore.events(matching: eventSearch)
     }
     
+    func getFormattedDateString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        
+        return formatter.string(from: date)
+    }
+    
 }
 
 extension AgendaViewController: UITableViewDataSource {
@@ -70,6 +78,7 @@ extension AgendaViewController: UITableViewDataSource {
         }
         
         cell.textLabel?.text = agendaEvents[indexPath.row].title
+        cell.detailTextLabel?.text = getFormattedDateString(date: agendaEvents[indexPath.row].startDate)
         
         return cell
     }
