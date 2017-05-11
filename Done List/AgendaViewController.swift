@@ -11,11 +11,12 @@ import EventKit
 
 class AgendaViewController: UIViewController {
     
-    var calendars = [EKCalendar]()
-    var agendaEvents = [EKEvent]()
-    static let ONE_DAY_INTERVAL = 24 * 3600
     
     @IBOutlet weak var agendaTableView: UITableView?
+    
+    var calendars = [EKCalendar]()
+    var agendaEvents = [EKEvent]()
+    static let ONE_DAY_INTERVAL = 24 * 3600 - 1
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -32,6 +33,7 @@ class AgendaViewController: UIViewController {
         agendaTableView?.delegate = self
         agendaTableView?.dataSource = self
         agendaTableView?.addSubview(self.refreshControl)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +70,7 @@ class AgendaViewController: UIViewController {
     func getTodaysEventsFromCalendars(calendars: [EKCalendar]) {
         let eventStore = EKEventStore()
         
-        let startDate = Date()
+        let startDate = getStartTime(date: Date())
         let endDate = startDate.addingTimeInterval(TimeInterval(AgendaViewController.ONE_DAY_INTERVAL))
         
         let eventSearch = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: self.calendars)
@@ -82,6 +84,24 @@ class AgendaViewController: UIViewController {
         formatter.timeStyle = .short
         
         return formatter.string(from: date)
+    }
+    
+    func getStartTime(date: Date) -> Date {
+        // Get calendar
+        let calendar = Calendar(identifier: .gregorian)
+        
+        // Set componenets to Midnight of current Day
+        var components = calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        
+        // Create start date based on components
+        guard let start = calendar.date(from: components) else {
+            return Date()
+        }
+        
+        return start
     }
     
 }
