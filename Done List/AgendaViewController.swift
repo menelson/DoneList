@@ -27,25 +27,33 @@ class AgendaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        getPreferredCalendars()
-        getTodaysEventsFromCalendars(calendars: calendars)
+        setupEventsData()
         
         agendaTableView?.delegate = self
         agendaTableView?.dataSource = self
         agendaTableView?.addSubview(self.refreshControl)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupEventsData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @objc func agendaRefresh(refreshControl: UIRefreshControl) {
-        getTodaysEventsFromCalendars(calendars: calendars)
-        
+        setupEventsData()
         self.agendaTableView?.reloadData()
         refreshControl.endRefreshing()
+    }
+    
+    func setupEventsData() {
+        self.calendars = [EKCalendar]()
+        self.getPreferredCalendars()
+        self.agendaEvents = [EKEvent]()
+        self.getTodaysEventsFromCalendars(calendars: calendars)
+        self.agendaTableView?.reloadData()
     }
     
     func getPreferredCalendars() {
