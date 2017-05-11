@@ -17,6 +17,13 @@ class AgendaViewController: UIViewController {
     
     @IBOutlet weak var agendaTableView: UITableView?
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(AgendaViewController.agendaRefresh), for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,11 +33,19 @@ class AgendaViewController: UIViewController {
         
         agendaTableView?.delegate = self
         agendaTableView?.dataSource = self
+        agendaTableView?.addSubview(self.refreshControl)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func agendaRefresh(refreshControl: UIRefreshControl) {
+        getTodaysEventsFromCalendars(calendars: calendars)
+        
+        self.agendaTableView?.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func getPreferredCalendars() {
