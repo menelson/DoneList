@@ -156,6 +156,12 @@ extension AgendaViewController: UITableViewDataSource {
         
         return title
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let header = view as? UITableViewHeaderFooterView
+        header?.contentView.backgroundColor = UIColor.init(red: 57/255, green: 104/255, blue: 243/255, alpha: 1.0)
+        header?.textLabel?.textColor = UIColor.white
+    }
 }
 
 extension AgendaViewController: UITableViewDelegate {
