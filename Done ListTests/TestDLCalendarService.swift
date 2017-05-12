@@ -11,6 +11,8 @@ import EventKit
 @testable import Done_List
 
 class TestDLCalendarService: XCTestCase {
+    let calendar = Calendar(identifier: .gregorian)
+    let today = Date()
     
     override func setUp() {
         super.setUp()
@@ -39,6 +41,21 @@ class TestDLCalendarService: XCTestCase {
         XCTAssert(startDateComps.minute == 0, "The mins should be 0")
         XCTAssert(startDateComps.month == todayDateComps.month, "Event month should remain the same")
         XCTAssert(startDateComps.day == todayDateComps.day, "Event day should remain the same")        
+    }
+    
+    func testServiceEndTime() {
+        // Given
+        let todayDateComps = calendar.dateComponents([.month, .day], from: today)
+        
+        // When
+        let endDate = DLCalendarService.init().getEndDate(date: today)
+        let endDateComps = calendar.dateComponents([.month, .day, .hour, .minute], from: endDate)
+        
+        // Then
+        XCTAssert(endDateComps.hour == 23, "The hour should be 0 on a 24 hour clock")
+        XCTAssert(endDateComps.minute == 59, "The mins should be 0")
+        XCTAssert(endDateComps.month == todayDateComps.month, "Event month should remain the same")
+        XCTAssert(endDateComps.day == todayDateComps.day, "Event day should remain the same")
     }
     
 }

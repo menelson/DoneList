@@ -78,6 +78,25 @@ class DLCalendarService {
         
         return start
     }
+    
+    func getEndDate(date: Date) -> Date {
+        // Get calendar
+        let calendar = Calendar(identifier: .gregorian)
+        
+        // Set componenets to Midnight of current Day
+        var components = calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = 23
+        components.minute = 59
+        components.second = 59
+        
+        // Create start date based on components
+        guard let endDate = calendar.date(from: components) else {
+            return Date()
+        }
+        
+        return endDate
+
+    }
 
 
 }

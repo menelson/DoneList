@@ -69,9 +69,9 @@ class AgendaViewController: UIViewController {
     
     func getTodaysEventsFromCalendars(calendars: [EKCalendar]) {
         let eventStore = EKEventStore()
-        
-        let startDate = DLCalendarService.init().getStartDate(date: Date())
-        let endDate = startDate.addingTimeInterval(TimeInterval(AgendaViewController.ONE_DAY_INTERVAL))
+        let today = Date()
+        let startDate = DLCalendarService.init().getStartDate(date: today)
+        let endDate = DLCalendarService.init().getEndDate(date: today)
         
         let eventSearch = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: self.calendars)
         
