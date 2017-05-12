@@ -14,6 +14,11 @@ class CalendarSettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView?
     
     var calendars = [EKCalendar]()
+    
+    lazy var availableCalenders = { () -> [String] in
+        let defaults = DLCalendarDefaults.init()
+        return defaults.getAvailableCalendars()
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +43,43 @@ class CalendarSettingsViewController: UIViewController {
         self.tableView?.reloadData()
         return true
     }
-
+    
+    func removeCalendarFromAvailable(row: Int) {
+        // Get Identifier from selected row in tableview
+        let selectedCal = calendars[row].calendarIdentifier
+        
+        // Find Cal in available Calendars
+        for index in 0...availableCalenders.count {
+            if index < availableCalenders.count && availableCalenders[index] == selectedCal {
+                // Remove from local
+                availableCalenders.remove(at: index)
+                
+                // Remove from defaults
+                let calDefaults = DLCalendarDefaults.init()
+                calDefaults.setAvailableCalendars(calendars: availableCalenders)
+            }
+        }
+    }
+    
+    func checkIfCalendarIsDefault(row: Int) -> Bool {
+        let currentIdentifier = calendars[row].calendarIdentifier
+        
+        for index in 0...availableCalenders.count {
+            if index < availableCalenders.count && availableCalenders[index] == currentIdentifier {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func addCalendarToDefaults(row: Int) {
+        // Add to local
+        availableCalenders.append(calendars[row].calendarIdentifier)
+        
+        // Add to defaults
+        let defaults = DLCalendarDefaults.init()
+        defaults.setAvailableCalendars(calendars: availableCalenders)
+    }
     
 }
 
@@ -48,8 +89,10 @@ extension CalendarSettingsViewController: UITableViewDelegate {
         
         if cell?.accessoryType == .checkmark {
             cell?.accessoryType = .none
+            self.removeCalendarFromAvailable(row: indexPath.row)
         } else {
             cell?.accessoryType = .checkmark
+            addCalendarToDefaults(row: indexPath.row)
         }
     }
 }
@@ -69,8 +112,13 @@ extension CalendarSettingsViewController: UITableViewDataSource {
         }
         
         let calendar = calendars[indexPath.row]
+        print("calendar \(calendar.calendarIdentifier)")
         
         cell.textLabel?.text = calendar.title
+        
+        if checkIfCalendarIsDefault(row: indexPath.row) {
+            cell.accessoryType = .checkmark
+        }
         
         return cell
     }
