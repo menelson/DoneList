@@ -8,6 +8,7 @@
 
 import Foundation
 import EventKit
+import UIKit
 
 class DLCalendarService {
     let eventStore = EKEventStore()
@@ -28,10 +29,10 @@ class DLCalendarService {
             _ = fetchUserCalendars()
             break
         case EKAuthorizationStatus.restricted:
-            // Prompt to display why - Currently unhandled
+            informUserOfCalendarNeed()
             break
         case EKAuthorizationStatus.denied:
-            // Prompt to display why - Currently unhandled
+            informUserOfCalendarNeed()
             break
         }
     }
@@ -48,9 +49,38 @@ class DLCalendarService {
                     _ = self.fetchUserCalendars()
                 }
             } else {
-                // Prompt user again
+                self.informUserOfCalendarNeed()
             }
         }
+    }
+    
+    func informUserOfCalendarNeed() {
+        let message = "The Calendar is used to schedule Tasks and block off your time. Without Access to the Calendar, some features of the app will not work correctly."
+        
+        let dialog = UIAlertController(title: "Calendar Permission", message: message, preferredStyle: .alert)
+        
+        let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: {
+            action in
+            
+            let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
+            UIApplication.shared.open(settingsURL!, options: [:], completionHandler: nil)
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        dialog.addAction(settingsAction)
+        dialog.addAction(cancelAction)
+        
+        if var currentViewController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = currentViewController.presentedViewController {
+                currentViewController = presentedViewController
+            }
+            
+            currentViewController.present(dialog, animated: true, completion: nil)
+        }
+        
+        
     }
     
     func fetchUserCalendars() -> [EKCalendar] {

@@ -13,6 +13,7 @@ class AgendaViewController: UIViewController {
     
     @IBOutlet weak var agendaTableView: UITableView?
     @IBOutlet weak var taskTableView: UITableView?
+    @IBOutlet weak var permissionView: UIView!
     
     var calendars = [EKCalendar]()
     var agendaEvents = [EKEvent]()
@@ -55,17 +56,35 @@ class AgendaViewController: UIViewController {
     }
     
     func setupEventsData() {
+        
         let calService = DLCalendarService.init()
         
-        // Reset Calendar Array
-        self.calendars = [EKCalendar]()
-        self.calendars = calService.fetchUserPreferredCalendars()
+        // Only pull data if permission is granted
+        let status = EKEventStore.authorizationStatus(for: EKEntityType.event)
+        if status == EKAuthorizationStatus.authorized {
+            
+            self.permissionView.isHidden = true
+            self.agendaTableView?.isHidden = false
+            
+            // Reset Calendar Array
+            self.calendars = [EKCalendar]()
+            self.calendars = calService.fetchUserPreferredCalendars()
+            
+            // Reset Event Array
+            self.agendaEvents = [EKEvent]()
+            self.agendaEvents = calService.fetchEventsForCurrentDay(calendars: self.calendars)
+            
+            self.agendaTableView?.reloadData()
+        } else {
+            agendaTableView?.isHidden = true
+            
+        }
+    }
+    
+    @IBAction func didTapGoToSettings(_ sender: Any) {
+        let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
         
-        // Reset Event Array
-        self.agendaEvents = [EKEvent]()
-        self.agendaEvents = calService.fetchEventsForCurrentDay(calendars: self.calendars)
-        
-        self.agendaTableView?.reloadData()
+        UIApplication.shared.open(settingsURL!, options: [:], completionHandler: nil)
     }
     
     func setupTodayTasks() {
@@ -78,7 +97,7 @@ class AgendaViewController: UIViewController {
         
         return formatter.string(from: date)
     }
-        
+    
 }
 
 extension AgendaViewController: UITableViewDataSource {
