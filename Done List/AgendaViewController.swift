@@ -11,12 +11,10 @@ import EventKit
 
 class AgendaViewController: UIViewController {
     
-    
     @IBOutlet weak var agendaTableView: UITableView?
     
     var calendars = [EKCalendar]()
     var agendaEvents = [EKEvent]()
-    static let ONE_DAY_INTERVAL = 24 * 3600 - 1
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -51,31 +49,17 @@ class AgendaViewController: UIViewController {
     }
     
     func setupEventsData() {
+        let calService = DLCalendarService.init()
+        
+        // Reset Calendar Array
         self.calendars = [EKCalendar]()
-        self.getPreferredCalendars()
+        self.calendars = calService.fetchUserPreferredCalendars()
+        
+        // Reset Event Array
         self.agendaEvents = [EKEvent]()
-        self.getTodaysEventsFromCalendars(calendars: calendars)
+        self.agendaEvents = calService.fetchEventsForCurrentDay(calendars: self.calendars)
+        
         self.agendaTableView?.reloadData()
-    }
-    
-    func getPreferredCalendars() {
-        let calendarIds = DLCalendarDefaults.init().getAvailableCalendars()
-        
-        for id in calendarIds {
-            let calendar = DLCalendarService.init().fetchCalendarById(identifier: id)
-            calendars.append(calendar)
-        }
-    }
-    
-    func getTodaysEventsFromCalendars(calendars: [EKCalendar]) {
-        let eventStore = EKEventStore()
-        let today = Date()
-        let startDate = DLCalendarService.init().getStartDate(date: today)
-        let endDate = DLCalendarService.init().getEndDate(date: today)
-        
-        let eventSearch = eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: self.calendars)
-        
-        agendaEvents = eventStore.events(matching: eventSearch)
     }
     
     func getFormattedDateString(date: Date) -> String {

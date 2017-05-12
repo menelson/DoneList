@@ -58,6 +58,36 @@ class TestDLCalendarService: XCTestCase {
         XCTAssert(endDateComps.day == todayDateComps.day, "Event day should remain the same")
     }
     
+    func testFetchingCurrentDayEvents() {
+        // Given
+        var events: [EKEvent]
+        let calendars = DLCalendarService.init().fetchUserPreferredCalendars()
+        
+        // When
+        events = DLCalendarService.init().fetchEventsForCurrentDay(calendars: calendars)
+        
+        // Then
+        XCTAssertNotNil(events)
+        XCTAssert(events.count >= 0,
+                  "Aray size should be greater than or equal to 0")
+    }
+    
+    func testFetchingPreferredCalendars() {
+        // Given
+        var calendars: [EKCalendar]
+        
+        // When
+        calendars = DLCalendarService.init().fetchUserPreferredCalendars()
+        
+        // Then
+        XCTAssertNotNil(calendars)
+        XCTAssert(calendars.count >= 0,
+                  "Aray size should be greater than or equal to 0")
+    }
+    
+    
+    
+    
 }
 
 class FakeCalendar: EKCalendar {

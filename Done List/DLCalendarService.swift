@@ -57,8 +57,31 @@ class DLCalendarService {
         return eventStore.calendars(for: EKEntityType.event)
     }
     
+    func fetchUserPreferredCalendars() -> [EKCalendar] {
+        var calendars = [EKCalendar]()
+        let calIds = DLCalendarDefaults.init().getAvailableCalendars()
+        
+        for id in calIds {
+            let calendar = fetchCalendarById(identifier: id)
+            calendars.append(calendar)
+        }
+        return calendars
+    }
+    
     func fetchCalendarById(identifier: String) -> EKCalendar {
         return eventStore.calendar(withIdentifier: identifier)!
+    }
+    
+    func fetchEventsForCurrentDay(calendars: [EKCalendar]) -> [EKEvent] {
+        let today = Date()
+        let startDate = getStartDate(date: today)
+        let endDate = getEndDate(date: today)
+        
+        let eventQuery = eventStore.predicateForEvents(withStart: startDate,
+                                                       end: endDate,
+                                                       calendars: calendars)
+        
+        return eventStore.events(matching: eventQuery)
     }
     
     func getStartDate(date: Date) -> Date {
