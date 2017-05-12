@@ -60,6 +60,24 @@ class DLCalendarService {
     func fetchCalendarById(identifier: String) -> EKCalendar {
         return eventStore.calendar(withIdentifier: identifier)!
     }
+    
+    func getStartDate(date: Date) -> Date {
+        // Get calendar
+        let calendar = Calendar(identifier: .gregorian)
+        
+        // Set componenets to Midnight of current Day
+        var components = calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        
+        // Create start date based on components
+        guard let start = calendar.date(from: components) else {
+            return Date()
+        }
+        
+        return start
+    }
 
 
 }
