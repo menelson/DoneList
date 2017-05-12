@@ -62,9 +62,8 @@ class AgendaViewController: UIViewController {
         self.agendaTableView?.reloadData()
     }
     
-    func getFormattedDateString(date: Date) -> String {
+    func getFormattedTimeString(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
         formatter.timeStyle = .short
         
         return formatter.string(from: date)
@@ -88,7 +87,7 @@ extension AgendaViewController: UITableViewDataSource {
         
         cell.eventTitle.text = agendaEvents[indexPath.row].title
         
-        cell.startTimeLabel.text = getFormattedDateString(date: agendaEvents[indexPath.row].startDate)
+        cell.startTimeLabel.text = getFormattedTimeString(date: agendaEvents[indexPath.row].startDate)
         
         let duration = DLCalendarService.init().calculateDuration(event: agendaEvents[indexPath.row]) / 60
         

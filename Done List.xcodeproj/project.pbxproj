@@ -83,13 +83,21 @@
 		27925FEF1EB8AE1A0083B8D9 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */,
+				27925FFE1EC5F6630083B8D9 /* Views and VCs */,
 				27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */,
-				27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */,
 				27925FFA1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift */,
-				27925FFC1EC4AE730083B8D9 /* AgendaTableViewCell.swift */,
 			);
 			name = Calendar;
+			sourceTree = "<group>";
+		};
+		27925FFE1EC5F6630083B8D9 /* Views and VCs */ = {
+			isa = PBXGroup;
+			children = (
+				27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */,
+				27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */,
+				27925FFC1EC4AE730083B8D9 /* AgendaTableViewCell.swift */,
+			);
+			name = "Views and VCs";
 			sourceTree = "<group>";
 		};
 		27E7FF0C1EAE12FB004F65B1 /* Task */ = {
