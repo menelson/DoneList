@@ -116,12 +116,13 @@ extension AgendaViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AgendaCell") else {
-            return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AgendaCell") as? AgendaTableViewCell else {
+            return AgendaTableViewCell()
         }
         
-        cell.textLabel?.text = agendaEvents[indexPath.row].title
-        cell.detailTextLabel?.text = getFormattedDateString(date: agendaEvents[indexPath.row].startDate)
+        cell.eventTitle.text = agendaEvents[indexPath.row].title
+        cell.startTimeLabel.text = getFormattedDateString(date: agendaEvents[indexPath.row].startDate)
+        cell.durationLabel.text = "30 mins"
         
         return cell
     }
