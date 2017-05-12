@@ -86,6 +86,25 @@ class TestDLCalendarService: XCTestCase {
                   "Aray size should be greater than or equal to 0")
     }
     
+    func testEventDurationCalculation() {
+        // Given
+        let eventStore = EKEventStore()
+        // 30 mins in seconds
+        let duration = TimeInterval(60 * 30)
+        let event: EKEvent = EKEvent(eventStore: eventStore)
+        event.startDate = Date()
+        event.endDate = event.startDate.addingTimeInterval(duration)
+        
+        // When
+        let calculatedDuration = DLCalendarService.init().calculateDuration(event: event)
+        
+        // Then
+        XCTAssertNotNil(calculatedDuration)
+        
+        XCTAssert(calculatedDuration == duration, "Duration should be 1800 seconds")
+        
+    }
+    
     
     
     

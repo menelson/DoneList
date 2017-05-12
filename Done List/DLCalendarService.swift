@@ -120,6 +120,13 @@ class DLCalendarService {
         return endDate
 
     }
+    
+    func calculateDuration(event: EKEvent) -> TimeInterval {
+        
+        let difference = event.endDate.timeIntervalSince(event.startDate)
+        
+        return difference
+    }
 
 
 }

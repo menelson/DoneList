@@ -87,8 +87,12 @@ extension AgendaViewController: UITableViewDataSource {
         }
         
         cell.eventTitle.text = agendaEvents[indexPath.row].title
+        
         cell.startTimeLabel.text = getFormattedDateString(date: agendaEvents[indexPath.row].startDate)
-        cell.durationLabel.text = "30 mins"
+        
+        let duration = DLCalendarService.init().calculateDuration(event: agendaEvents[indexPath.row]) / 60
+        
+        cell.durationLabel.text = "\(Int(duration)) mins"
         
         return cell
     }
