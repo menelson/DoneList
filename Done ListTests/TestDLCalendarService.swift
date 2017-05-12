@@ -37,6 +37,7 @@ class TestDLCalendarService: XCTestCase {
         let startDateComps = calendar.dateComponents([.month, .day, .hour, .minute], from: startDate)
         
         // Then
+        XCTAssertNotNil(startDate)
         XCTAssert(startDateComps.hour == 0, "The hour should be 0 on a 24 hour clock")
         XCTAssert(startDateComps.minute == 0, "The mins should be 0")
         XCTAssert(startDateComps.month == todayDateComps.month, "Event month should remain the same")
