@@ -12,9 +12,11 @@ import EventKit
 class AgendaViewController: UIViewController {
     
     @IBOutlet weak var agendaTableView: UITableView?
+    @IBOutlet weak var taskTableView: UITableView?
     
     var calendars = [EKCalendar]()
     var agendaEvents = [EKEvent]()
+    var todayTasks = [TaskMO]()
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -27,10 +29,14 @@ class AgendaViewController: UIViewController {
         super.viewDidLoad()
 
         setupEventsData()
+        setupTodayTasks()
         
         agendaTableView?.delegate = self
         agendaTableView?.dataSource = self
         agendaTableView?.addSubview(self.refreshControl)
+        
+        taskTableView?.delegate = self
+        taskTableView?.dataSource = self
         
     }
     
@@ -62,6 +68,10 @@ class AgendaViewController: UIViewController {
         self.agendaTableView?.reloadData()
     }
     
+    func setupTodayTasks() {
+        self.todayTasks = TaskController.sharedInstance.fetchTasks(byPriority: Priority.Urgent)
+    }
+    
     func getFormattedTimeString(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -77,27 +87,55 @@ extension AgendaViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return agendaEvents.count
+        var count = 0
+        
+        if (tableView == agendaTableView) {
+            count = agendaEvents.count
+        } else if (tableView == taskTableView) {
+            count = todayTasks.count
+            print("Task TV : \(count)")
+        }
+        
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AgendaCell") as? AgendaTableViewCell else {
-            return AgendaTableViewCell()
+        
+        if (tableView == agendaTableView) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AgendaCell") as? AgendaTableViewCell else {
+                return AgendaTableViewCell()
+            }
+            
+            cell.eventTitle.text = agendaEvents[indexPath.row].title
+            
+            cell.startTimeLabel.text = getFormattedTimeString(date: agendaEvents[indexPath.row].startDate)
+            
+            let duration = DLCalendarService.init().calculateDuration(event: agendaEvents[indexPath.row]) / 60
+            
+            cell.durationLabel.text = "\(Int(duration)) mins"
+            
+            return cell
+        } else if (tableView == taskTableView) {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TodayTaskCell") else {
+                return UITableViewCell()
+            }
+            cell.textLabel?.text = todayTasks[indexPath.row].name
+            return cell
         }
         
-        cell.eventTitle.text = agendaEvents[indexPath.row].title
-        
-        cell.startTimeLabel.text = getFormattedTimeString(date: agendaEvents[indexPath.row].startDate)
-        
-        let duration = DLCalendarService.init().calculateDuration(event: agendaEvents[indexPath.row]) / 60
-        
-        cell.durationLabel.text = "\(Int(duration)) mins"
-        
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Already Scheduled"
+        var title: String = "Empty"
+        
+        if (tableView == agendaTableView) {
+            title = "Already Scheduled"
+        } else if (tableView == taskTableView) {
+            title = "Unscheduled Tasks"
+        }
+        
+        return title
     }
 }
 
