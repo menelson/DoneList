@@ -43,6 +43,7 @@ class AgendaViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         setupEventsData()
+        setupTodayTasks()
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,7 +89,9 @@ class AgendaViewController: UIViewController {
     }
     
     func setupTodayTasks() {
+        self.todayTasks = [TaskMO]()
         self.todayTasks = TaskController.sharedInstance.fetchTasks(byPriority: Priority.Urgent)
+        self.taskTableView?.reloadData()
     }
     
     func getFormattedTimeString(date: Date) -> String {
