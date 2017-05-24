@@ -13,7 +13,7 @@ class TaskController: NSObject {
     
     static let sharedInstance = TaskController()
     var dataController: DataController
-    let context: NSManagedObjectContext
+    var context: NSManagedObjectContext
     
     override init() {
         dataController = DataController() {}
@@ -53,6 +53,20 @@ class TaskController: NSObject {
     
     func getTaskContext() -> NSManagedObjectContext {
         return context
+    }
+    
+    func fetchAllTasks() -> [TaskMO] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        
+        var fetchedTasks = [TaskMO]()
+        
+        do {
+            fetchedTasks = try context.fetch(fetchRequest) as! [TaskMO]
+        } catch {
+            print("Unable to fetch tasks")
+        }
+        
+        return fetchedTasks
     }
     
     func fetchTasks(byPriority priority: Priority) -> [TaskMO] {
