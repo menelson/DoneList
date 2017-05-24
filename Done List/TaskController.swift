@@ -13,7 +13,7 @@ class TaskController: NSObject {
     
     static let sharedInstance = TaskController()
     var dataController: DataController
-    let context: NSManagedObjectContext
+    var context: NSManagedObjectContext
     
     override init() {
         dataController = DataController() {}
