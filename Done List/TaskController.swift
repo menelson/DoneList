@@ -55,6 +55,14 @@ class TaskController: NSObject {
         return context
     }
     
+    func bulkUpdate(tasks: [TaskMO], priority: Priority) {
+        for task in tasks {
+            task.priority = priority.rawValue
+            task.priorityInt = Int32(priority.hashValue)
+        }
+        save()
+    }
+    
     func fetchAllTasks() -> [TaskMO] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         

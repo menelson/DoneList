@@ -70,6 +70,10 @@ class TaskListViewController: UIViewController {
         self.present(addAlert, animated: true, completion: nil)
     }
     
+    @IBAction func didTapAction(_ sender: Any) {
+        displayActionSheet()
+    }
+    
     func initializeFetchedResultsController() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         
@@ -88,6 +92,27 @@ class TaskListViewController: UIViewController {
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
+    }
+    
+    func displayActionSheet() {
+        let actionSheet = UIAlertController(title: "Bulk Actions", message: nil, preferredStyle: .actionSheet)
+        
+        let completeTasksAction = UIAlertAction(title: "Complete Today's Tasks", style: .default, handler: {
+            _ in
+            
+            let tasks = TaskController.sharedInstance.fetchTasks(byPriority: Priority.Urgent)
+        
+            TaskController.sharedInstance.bulkUpdate(tasks: tasks, priority: Priority.Completed)
+        })
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(completeTasksAction)
+        actionSheet.addAction(cancelAction)
+        
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
 
 }
