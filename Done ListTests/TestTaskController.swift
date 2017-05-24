@@ -15,13 +15,12 @@ class TestTaskController: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        
         let context = setUpInMemoryCoreDateContext()
         controller = TaskController.init()
         controller?.context = context
         
         controller?.createNewTask(name: "Unit Test 1")
-        
     }
     
     override func tearDown() {
@@ -62,5 +61,59 @@ class TestTaskController: XCTestCase {
             XCTAssertTrue(tasks?[0].priority == "This Week", "Priority should equal Today")
         }
     
+    }
+    
+    func testFetchAllTasks() {
+        // Given
+        let tasks: [TaskMO]
+        
+        // When
+        tasks = (controller?.fetchAllTasks())!
+        
+        // Then
+        XCTAssertTrue(tasks.count >= 1, "Task Array should contain 1 or more objects")
+    }
+    
+    func testCreateNewTask() {
+        // Given
+        let name = "Test"
+        
+        // When
+        controller?.createNewTask(name: name)
+        
+        // Then
+        let tasks = controller?.fetchAllTasks()
+        
+        XCTAssertTrue(tasks?.count == 2, "Tasks count should be two")
+    }
+    
+    func testTaskUpdate() {
+        // Given
+        let tasks = controller?.fetchAllTasks()
+        let testTask = tasks?[0]
+        
+        // When
+        testTask?.priority = Priority.Completed.rawValue
+        testTask?.priorityInt = Int32(Priority.Completed.hashValue)
+        
+        controller?.updateTask(task: testTask!)
+        
+        // Then
+        XCTAssertTrue(testTask?.priority == "Completed", "Task Priority should be Completed")
+        XCTAssertTrue(testTask?.priorityInt == 4, "Task PriorityInt should be 4")
+    }
+    
+    func testTaskDelete() {
+        // Given
+        var tasks = controller?.fetchAllTasks()
+        let task = tasks?[0]
+        
+        // When
+        controller?.deleteTask(task: task!)
+        
+        // Then
+        tasks = controller?.fetchAllTasks()
+        
+        XCTAssertTrue(tasks?.count == 0, "Tasks should be empty")
     }
 }

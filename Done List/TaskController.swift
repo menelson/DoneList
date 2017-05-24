@@ -55,6 +55,20 @@ class TaskController: NSObject {
         return context
     }
     
+    func fetchAllTasks() -> [TaskMO] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        
+        var fetchedTasks = [TaskMO]()
+        
+        do {
+            fetchedTasks = try context.fetch(fetchRequest) as! [TaskMO]
+        } catch {
+            print("Unable to fetch tasks")
+        }
+        
+        return fetchedTasks
+    }
+    
     func fetchTasks(byPriority priority: Priority) -> [TaskMO] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "priority == %@", argumentArray: [priority.rawValue])
