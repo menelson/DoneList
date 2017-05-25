@@ -114,6 +114,9 @@ class TaskController: NSObject {
             } else if diff == 2 {
                 task.priority = Priority.Normal.rawValue
                 task.priorityInt = Int32(Priority.Normal.hashValue)
+            } else if task.priority != Priority.Completed.rawValue {
+                task.priority = Priority.Low.rawValue
+                task.priorityInt = Int32(Priority.Low.hashValue)
             }
         }
         save()
