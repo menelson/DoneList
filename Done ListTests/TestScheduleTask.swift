@@ -85,6 +85,19 @@ class TestScheduleTask: XCTestCase {
         XCTAssert(dictionary["blocked"] as? String == "true", "Event slot should be blocked")
     }
     
+    func testRetrievingOpenSlots() {
+        // Given
+        _ = scheduleService
+        
+        // When
+        let openSlots = scheduleService?.fetchOpenSlots()
+        
+        // Then
+        XCTAssertNotNil(openSlots)
+        XCTAssert((openSlots?.count)! <= 24)
+
+    }
+    
     
     
     

@@ -27,7 +27,7 @@ class DLScheduleService {
         return dictionary
     }
     
-    func addEventsToAvailability(fromCalendars calendars: [EKCalendar]) -> [Int: Any] {
+    private func addEventsToAvailability(fromCalendars calendars: [EKCalendar]) -> [Int: Any] {
         var dictionary = initializeEmptyDictionary()
         
         let events = DLCalendarService().fetchEventsForCurrentDay(calendars: calendars)
@@ -41,5 +41,19 @@ class DLScheduleService {
     
     func getAvailability() -> [Int: Any] {
         return availability
+    }
+    
+    func fetchOpenSlots() -> [Int] {
+        var openSlots = [Int]()
+        
+        for i in 0...availability.count {
+            let slot = availability[i] as? [String: Any]
+            
+            if slot?["blocked"] as? String == "false" {
+                openSlots.append(i)
+            }
+        }
+        
+        return openSlots
     }
 }
