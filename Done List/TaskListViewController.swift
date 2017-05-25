@@ -105,10 +105,17 @@ class TaskListViewController: UIViewController {
             TaskController.sharedInstance.bulkUpdate(tasks: tasks, priority: Priority.Completed)
         })
         
+        let adjustTaskPriority = UIAlertAction(title: "Update All Task Priorities", style: .default, handler: {
+            _ in
+            
+            TaskController.sharedInstance.autoUpdateTaskPriority()
+        })
+        
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionSheet.addAction(completeTasksAction)
+        actionSheet.addAction(adjustTaskPriority)
         actionSheet.addAction(cancelAction)
         
         

@@ -98,5 +98,22 @@ class TaskController: NSObject {
         
         return Int(round(diff)) / (3600 * 24)
     }
+    
+    func autoUpdateTaskPriority() {
+        let tasks = fetchAllTasks()
+        
+        for task in tasks {
+            let diff = round((task.dueDate! as Date).timeIntervalSince(Date()) / (3600 * 24))
+            
+            if diff == 1 {
+                task.priority = Priority.High.rawValue
+                task.priorityInt = Int32(Priority.High.hashValue)
+            } else if diff == 2 {
+                task.priority = Priority.Normal.rawValue
+                task.priorityInt = Int32(Priority.Normal.hashValue)
+            }
+        }
+        save()
+    }
 
 }

@@ -142,4 +142,18 @@ class TestTaskController: XCTestCase {
         // Then
         XCTAssertTrue(diff == 0, "Date Difference should be 0")
     }
+    
+    func testTaskAutoPriorityUpdate() {
+        // Given
+        let tasks = controller?.fetchAllTasks()
+        let task = tasks?[0]
+        task?.dueDate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) as NSDate?
+        controller?.save()
+        
+        // When
+        controller?.autoUpdateTaskPriority()
+        
+        // Then
+        XCTAssertTrue(task?.priority == Priority.High.rawValue, "Task priority should move to Tomorrow from today")
+    }
 }
