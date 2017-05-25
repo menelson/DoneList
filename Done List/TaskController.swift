@@ -104,8 +104,11 @@ class TaskController: NSObject {
         
         for task in tasks {
             let diff = round((task.dueDate! as Date).timeIntervalSince(Date()) / (3600 * 24))
-            
-            if diff == 1 {
+            // Only moving things for the next few days
+            if diff > 1 {
+                task.priority = Priority.Urgent.rawValue
+                task.priorityInt = Int32(Priority.Urgent.hashValue)
+            }else if diff == 1 {
                 task.priority = Priority.High.rawValue
                 task.priorityInt = Int32(Priority.High.hashValue)
             } else if diff == 2 {
