@@ -81,13 +81,27 @@ class AgendaViewController: UIViewController {
             
             // Reset Event Array
             self.agendaEvents = [EKEvent]()
-            self.agendaEvents = calService.fetchEventsForCurrentDay(calendars: self.calendars)
+            self.agendaEvents = setupCurrentAndFutureEvents()
             
             self.agendaTableView?.reloadData()
         } else {
             agendaTableView?.isHidden = true
             
         }
+    }
+    
+    func setupCurrentAndFutureEvents() -> [EKEvent] {
+        let todayEvents = DLCalendarService.init().fetchEventsForCurrentDay(calendars: self.calendars)
+        
+        var currentAndFutureEvents = [EKEvent]()
+        let now = Date()
+        for event in todayEvents {
+            if event.startDate >= now {
+                currentAndFutureEvents.append(event)
+            }
+        }
+        
+        return currentAndFutureEvents
     }
     
     func setupTodayTasks() {
