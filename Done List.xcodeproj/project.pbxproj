@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271D58DF1ED6555D00A5EC91 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D58DE1ED6555D00A5EC91 /* TaskTableViewCell.swift */; };
 		27925FF11EBBFFC40083B8D9 /* AgendaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */; };
 		27925FF51EC0A87E0083B8D9 /* DLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */; };
 		27925FF71EC0B5190083B8D9 /* TestDLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		271D58DE1ED6555D00A5EC91 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaViewController.swift; sourceTree = "<group>"; };
 		27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCalendarService.swift; sourceTree = "<group>"; };
 		27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDLCalendarService.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				27F3AFBE1EB367F700D8A043 /* TaskDetailViewController.swift */,
 				27F3AFC01EB6BA0700D8A043 /* PriorityViewController.swift */,
 				27F3AFC21EB76BD800D8A043 /* DateViewController.swift */,
+				271D58DE1ED6555D00A5EC91 /* TaskTableViewCell.swift */,
 			);
 			name = Task;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 			files = (
 				27F3AFC11EB6BA0700D8A043 /* PriorityViewController.swift in Sources */,
 				27925FF91EC1B9F30083B8D9 /* CalendarSettingsViewController.swift in Sources */,
+				271D58DF1ED6555D00A5EC91 /* TaskTableViewCell.swift in Sources */,
 				27F3AFBF1EB367F700D8A043 /* TaskDetailViewController.swift in Sources */,
 				27F557871EAE0FB1007AFD11 /* AppDelegate.swift in Sources */,
 				27E7FF111EAE256D004F65B1 /* DataController.swift in Sources */,

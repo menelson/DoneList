@@ -50,12 +50,20 @@ class AgendaViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    // MARK:- UI Controls
     @objc func agendaRefresh(refreshControl: UIRefreshControl) {
         setupEventsData()
         self.agendaTableView?.reloadData()
         refreshControl.endRefreshing()
     }
     
+    @IBAction func didTapGoToSettings(_ sender: Any) {
+        let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
+        
+        UIApplication.shared.open(settingsURL!, options: [:], completionHandler: nil)
+    }
+    
+    // MARK:- Setup helpers
     func setupEventsData() {
         
         let calService = DLCalendarService.init()
@@ -80,12 +88,6 @@ class AgendaViewController: UIViewController {
             agendaTableView?.isHidden = true
             
         }
-    }
-    
-    @IBAction func didTapGoToSettings(_ sender: Any) {
-        let settingsURL = URL(string: UIApplicationOpenSettingsURLString)
-        
-        UIApplication.shared.open(settingsURL!, options: [:], completionHandler: nil)
     }
     
     func setupTodayTasks() {

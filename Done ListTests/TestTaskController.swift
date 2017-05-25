@@ -1,3 +1,4 @@
+
 //
 //  TestTaskController.swift
 //  Done List
@@ -115,5 +116,44 @@ class TestTaskController: XCTestCase {
         tasks = controller?.fetchAllTasks()
         
         XCTAssertTrue(tasks?.count == 0, "Tasks should be empty")
+    }
+    
+    func testBulkUpdateProjectPriority() {
+        // Given
+        let tasks = controller?.fetchTasks(byPriority: Priority.Normal)
+        
+        // When
+        controller?.bulkUpdate(tasks: tasks!, priority: Priority.Completed)
+        
+        // Then
+        let updatedTasks = controller?.fetchTasks(byPriority: Priority.Completed)
+        
+        XCTAssertTrue(updatedTasks?.count == 1, "Completed Tasks should be 1")
+    }
+    
+    func testTaskAgeCalculation() {
+        // Given
+        let tasks = controller?.fetchAllTasks()
+        let task = tasks?[0]
+        
+        // When
+        let diff = controller?.getTaskAge(task: task!)
+        
+        // Then
+        XCTAssertTrue(diff == 0, "Date Difference should be 0")
+    }
+    
+    func testTaskAutoPriorityUpdate() {
+        // Given
+        let tasks = controller?.fetchAllTasks()
+        let task = tasks?[0]
+        task?.dueDate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) as NSDate?
+        controller?.save()
+        
+        // When
+        controller?.autoUpdateTaskPriority()
+        
+        // Then
+        XCTAssertTrue(task?.priority == Priority.High.rawValue, "Task priority should move to Tomorrow from today")
     }
 }

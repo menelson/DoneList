@@ -37,8 +37,8 @@ class TaskController: NSObject {
         task.name = name
         task.priority = Priority.Normal.rawValue
         task.priorityInt = Int32(Priority.Normal.hashValue)
-        task.createdDate = Date.init() as NSDate?
-        task.dueDate = Date.distantFuture as NSDate?
+        task.createdDate = Date() as NSDate?
+        task.dueDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())! as NSDate
         save()
     }
     
@@ -53,6 +53,14 @@ class TaskController: NSObject {
     
     func getTaskContext() -> NSManagedObjectContext {
         return context
+    }
+    
+    func bulkUpdate(tasks: [TaskMO], priority: Priority) {
+        for task in tasks {
+            task.priority = priority.rawValue
+            task.priorityInt = Int32(priority.hashValue)
+        }
+        save()
     }
     
     func fetchAllTasks() -> [TaskMO] {
@@ -81,8 +89,37 @@ class TaskController: NSObject {
             fatalError("Failed to fetch tasks: \(error)")
         }
         
-        
         return fetchedTasks
+    }
+    
+    func getTaskAge(task: TaskMO) -> Int {
+        let now = Date()
+        let diff = now.timeIntervalSince(task.createdDate! as Date)
+        
+        return Int(round(diff)) / (3600 * 24)
+    }
+    
+    func autoUpdateTaskPriority() {
+        let tasks = fetchAllTasks()
+        
+        for task in tasks {
+            let diff = round((task.dueDate! as Date).timeIntervalSince(Date()) / (3600 * 24))
+            // Only moving things for the next few days
+            if diff > 1 {
+                task.priority = Priority.Urgent.rawValue
+                task.priorityInt = Int32(Priority.Urgent.hashValue)
+            }else if diff == 1 {
+                task.priority = Priority.High.rawValue
+                task.priorityInt = Int32(Priority.High.hashValue)
+            } else if diff == 2 {
+                task.priority = Priority.Normal.rawValue
+                task.priorityInt = Int32(Priority.Normal.hashValue)
+            } else if task.priority != Priority.Completed.rawValue {
+                task.priority = Priority.Low.rawValue
+                task.priorityInt = Int32(Priority.Low.hashValue)
+            }
+        }
+        save()
     }
 
 }

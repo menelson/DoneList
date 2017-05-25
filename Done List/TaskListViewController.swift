@@ -70,6 +70,10 @@ class TaskListViewController: UIViewController {
         self.present(addAlert, animated: true, completion: nil)
     }
     
+    @IBAction func didTapAction(_ sender: Any) {
+        displayActionSheet()
+    }
+    
     func initializeFetchedResultsController() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         
@@ -88,6 +92,44 @@ class TaskListViewController: UIViewController {
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
+    }
+    
+    func displayActionSheet() {
+        let actionSheet = UIAlertController(title: "Bulk Actions", message: nil, preferredStyle: .actionSheet)
+        
+        let completeTasksAction = UIAlertAction(title: "Complete Today's Tasks", style: .default, handler: {
+            _ in
+            
+            let tasks = TaskController.sharedInstance.fetchTasks(byPriority: Priority.Urgent)
+        
+            TaskController.sharedInstance.bulkUpdate(tasks: tasks, priority: Priority.Completed)
+        })
+        
+        let adjustTaskPriority = UIAlertAction(title: "Update All Task Priorities", style: .default, handler: {
+            _ in
+            
+            TaskController.sharedInstance.autoUpdateTaskPriority()
+        })
+        
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(completeTasksAction)
+        actionSheet.addAction(adjustTaskPriority)
+        actionSheet.addAction(cancelAction)
+        
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func fetchFormattedTaskDueDate(task: TaskMO) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        
+        if task.dueDate == (Date.distantFuture as NSDate) {
+            return "NO DUE DATE"
+        }
+        return formatter.string(from: task.dueDate! as Date)
     }
 
 }
@@ -110,11 +152,16 @@ extension TaskListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")!
+        let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")! as! TaskTableViewCell
         
         let task = fetchedResultsController?.object(at: indexPath) as! TaskMO
         
-        cell.textLabel?.text = task.name
+        cell.taskTitle.text = task.name
+        
+        let age = TaskController.sharedInstance.getTaskAge(task: task)
+        cell.taskAge.text = "\(age) days old"
+        
+        cell.taskCreatedDate.text = self.fetchFormattedTaskDueDate(task: task)
         
         return cell
     }
