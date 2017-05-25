@@ -114,6 +114,16 @@ class TaskListViewController: UIViewController {
         
         self.present(actionSheet, animated: true, completion: nil)
     }
+    
+    func fetchFormattedTaskDueDate(task: TaskMO) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        
+        if task.dueDate == (Date.distantFuture as NSDate) {
+            return "NO DUE DATE"
+        }
+        return formatter.string(from: task.dueDate! as Date)
+    }
 
 }
 
@@ -135,11 +145,16 @@ extension TaskListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")!
+        let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")! as! TaskTableViewCell
         
         let task = fetchedResultsController?.object(at: indexPath) as! TaskMO
         
-        cell.textLabel?.text = task.name
+        cell.taskTitle.text = task.name
+        
+        let age = TaskController.sharedInstance.getTaskAge(task: task)
+        cell.taskAge.text = "\(age) days old"
+        
+        cell.taskCreatedDate.text = self.fetchFormattedTaskDueDate(task: task)
         
         return cell
     }

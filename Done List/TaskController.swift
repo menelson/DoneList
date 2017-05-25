@@ -89,8 +89,14 @@ class TaskController: NSObject {
             fatalError("Failed to fetch tasks: \(error)")
         }
         
-        
         return fetchedTasks
+    }
+    
+    func getTaskAge(task: TaskMO) -> Int {
+        let now = Date()
+        let diff = now.timeIntervalSince(task.createdDate! as Date)
+        
+        return Int(round(diff)) / (3600 * 24)
     }
 
 }

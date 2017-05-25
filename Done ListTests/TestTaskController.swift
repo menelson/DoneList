@@ -130,4 +130,16 @@ class TestTaskController: XCTestCase {
         
         XCTAssertTrue(updatedTasks?.count == 1, "Completed Tasks should be 1")
     }
+    
+    func testTaskAgeCalculation() {
+        // Given
+        let tasks = controller?.fetchAllTasks()
+        let task = tasks?[0]
+        
+        // When
+        let diff = controller?.getTaskAge(task: task!)
+        
+        // Then
+        XCTAssertTrue(diff == 0, "Date Difference should be 0")
+    }
 }
