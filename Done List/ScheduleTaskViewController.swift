@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import EventKitUI
+
 
 class ScheduleTaskViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView?
+    
+    var task: TaskMO?
+    
     var timeSlots = [Int]()
+    lazy var editEventVC: EKEventEditViewController? = EKEventEditViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +26,16 @@ class ScheduleTaskViewController: UIViewController {
         tableView?.delegate = self
         
         setUpTimeSlots()
+    
+        editEventVC?.editViewDelegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    // UI Actions and Setup
     @IBAction func didTapCancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -35,6 +44,7 @@ class ScheduleTaskViewController: UIViewController {
         let calendars = DLCalendarService().fetchUserPreferredCalendars()
         timeSlots = DLScheduleService(forCalendars: calendars).fetchOpenSlots()
     }
+    
 }
 
 extension ScheduleTaskViewController: UITableViewDataSource {
@@ -54,9 +64,10 @@ extension ScheduleTaskViewController: UITableViewDataSource {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
-        let time = Calendar.current.date(bySetting: .hour, value: timeSlots[indexPath.row], of: Date())
         
-        cell.textLabel?.text = formatter.string(from: time!)
+        let startTime = Calendar.current.date(bySetting: .hour, value: timeSlots[indexPath.row], of: Date())
+        
+        cell.textLabel?.text = formatter.string(from: startTime!)
         
         return cell
     }
@@ -64,6 +75,40 @@ extension ScheduleTaskViewController: UITableViewDataSource {
 
 extension ScheduleTaskViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected \(indexPath.row)")
+        
+        let startTime = Calendar.current.date(bySetting: .hour, value: timeSlots[indexPath.row], of: Date())
+        let endTime = Calendar.current.date(byAdding: .hour, value: 1, to: startTime!)
+        
+        let store = EKEventStore()
+        let event = EKEvent(eventStore: store)
+        event.title = task?.name ?? ""
+        event.startDate = startTime!
+        event.endDate = endTime!
+        
+        editEventVC?.event = event
+        editEventVC?.eventStore = store
+        
+        self.present(editEventVC!, animated: true, completion: nil)
+    }
+}
+
+
+extension ScheduleTaskViewController: EKEventEditViewDelegate {
+    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+        switch action {
+        case .canceled:
+            controller.cancelEditing()
+            self.dismiss(animated: true, completion: nil)
+            break;
+        case .saved:
+            // Dismiss Edit
+            controller.dismiss(animated: true, completion: {
+                // Dismiss current VC
+                self.dismiss(animated: true, completion: nil)
+            })
+            break;
+        default:
+            break;
+        }
     }
 }
