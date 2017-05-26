@@ -170,6 +170,7 @@ extension AgendaViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.textLabel?.text = todayTasks[indexPath.row].name
+            print("Scheduled: \(todayTasks[indexPath.row].scheduled)")
             return cell
         }
         

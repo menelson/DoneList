@@ -39,6 +39,7 @@ class TaskController: NSObject {
         task.priorityInt = Int32(Priority.Normal.hashValue)
         task.createdDate = Date() as NSDate?
         task.dueDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())! as NSDate
+        task.scheduled = false
         save()
     }
     

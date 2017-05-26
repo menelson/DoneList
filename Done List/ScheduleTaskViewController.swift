@@ -103,6 +103,9 @@ extension ScheduleTaskViewController: EKEventEditViewDelegate {
         case .saved:
             // Dismiss Edit
             controller.dismiss(animated: true, completion: {
+                // Update Task
+                self.task?.scheduled = true
+                TaskController().updateTask(task: self.task!)
                 // Dismiss current VC
                 self.dismiss(animated: true, completion: nil)
             })
