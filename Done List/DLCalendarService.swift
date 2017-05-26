@@ -12,7 +12,6 @@ import UIKit
 
 class DLCalendarService {
     let eventStore = EKEventStore()
-    var calendars = [EKCalendar]()
     
     init() {
         checkPermissionStatus()

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		271D58DF1ED6555D00A5EC91 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D58DE1ED6555D00A5EC91 /* TaskTableViewCell.swift */; };
+		271D58E11ED7090400A5EC91 /* TestScheduleTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D58E01ED7090400A5EC91 /* TestScheduleTask.swift */; };
+		271D58E31ED70BC700A5EC91 /* DLScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D58E21ED70BC700A5EC91 /* DLScheduleService.swift */; };
+		271D58E51ED7A53B00A5EC91 /* ScheduleTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271D58E41ED7A53B00A5EC91 /* ScheduleTaskViewController.swift */; };
 		27925FF11EBBFFC40083B8D9 /* AgendaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */; };
 		27925FF51EC0A87E0083B8D9 /* DLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */; };
 		27925FF71EC0B5190083B8D9 /* TestDLCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */; };
@@ -41,6 +44,9 @@
 
 /* Begin PBXFileReference section */
 		271D58DE1ED6555D00A5EC91 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		271D58E01ED7090400A5EC91 /* TestScheduleTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScheduleTask.swift; sourceTree = "<group>"; };
+		271D58E21ED70BC700A5EC91 /* DLScheduleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLScheduleService.swift; sourceTree = "<group>"; };
+		271D58E41ED7A53B00A5EC91 /* ScheduleTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTaskViewController.swift; sourceTree = "<group>"; };
 		27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgendaViewController.swift; sourceTree = "<group>"; };
 		27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DLCalendarService.swift; sourceTree = "<group>"; };
 		27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDLCalendarService.swift; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 				27925FFE1EC5F6630083B8D9 /* Views and VCs */,
 				27925FF41EC0A87E0083B8D9 /* DLCalendarService.swift */,
 				27925FFA1EC1FE6A0083B8D9 /* DLCalendarDefaults.swift */,
+				271D58E21ED70BC700A5EC91 /* DLScheduleService.swift */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -100,6 +107,7 @@
 				27925FF01EBBFFC40083B8D9 /* AgendaViewController.swift */,
 				27925FF81EC1B9F30083B8D9 /* CalendarSettingsViewController.swift */,
 				27925FFC1EC4AE730083B8D9 /* AgendaTableViewCell.swift */,
+				271D58E41ED7A53B00A5EC91 /* ScheduleTaskViewController.swift */,
 			);
 			name = "Views and VCs";
 			sourceTree = "<group>";
@@ -158,6 +166,7 @@
 				27F5579D1EAE0FB2007AFD11 /* Info.plist */,
 				27925FF61EC0B5190083B8D9 /* TestDLCalendarService.swift */,
 				27925FFF1EC604150083B8D9 /* TestTaskController.swift */,
+				271D58E01ED7090400A5EC91 /* TestScheduleTask.swift */,
 			);
 			path = "Done ListTests";
 			sourceTree = "<group>";
@@ -267,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271D58E31ED70BC700A5EC91 /* DLScheduleService.swift in Sources */,
 				27F3AFC11EB6BA0700D8A043 /* PriorityViewController.swift in Sources */,
 				27925FF91EC1B9F30083B8D9 /* CalendarSettingsViewController.swift in Sources */,
 				271D58DF1ED6555D00A5EC91 /* TaskTableViewCell.swift in Sources */,
@@ -275,6 +285,7 @@
 				27E7FF111EAE256D004F65B1 /* DataController.swift in Sources */,
 				27E7FF0B1EAE115A004F65B1 /* TaskListViewController.swift in Sources */,
 				27E7FF131EAE2734004F65B1 /* TaskController.swift in Sources */,
+				271D58E51ED7A53B00A5EC91 /* ScheduleTaskViewController.swift in Sources */,
 				27E7FF0F1EAE2129004F65B1 /* Model.xcdatamodeld in Sources */,
 				27925FF51EC0A87E0083B8D9 /* DLCalendarService.swift in Sources */,
 				27F3AFC31EB76BD800D8A043 /* DateViewController.swift in Sources */,
@@ -289,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271D58E11ED7090400A5EC91 /* TestScheduleTask.swift in Sources */,
 				279260001EC604150083B8D9 /* TestTaskController.swift in Sources */,
 				27925FF71EC0B5190083B8D9 /* TestDLCalendarService.swift in Sources */,
 			);

@@ -63,6 +63,18 @@ class AgendaViewController: UIViewController {
         UIApplication.shared.open(settingsURL!, options: [:], completionHandler: nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "TaskScheduleSegue" {
+            
+            let destinationVC = segue.destination as? ScheduleTaskViewController
+            
+            let indexPath = taskTableView?.indexPathForSelectedRow
+            let task = todayTasks[(indexPath?.row)!]
+            
+            destinationVC?.task = task
+        }
+    }
+    
     // MARK:- Setup helpers
     func setupEventsData() {
         
@@ -184,5 +196,11 @@ extension AgendaViewController: UITableViewDataSource {
 }
 
 extension AgendaViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == taskTableView {
+            performSegue(withIdentifier: "TaskScheduleSegue", sender: self)
+        }
+    }
     
 }
