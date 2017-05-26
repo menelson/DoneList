@@ -93,6 +93,31 @@ class TaskController: NSObject {
         return fetchedTasks
     }
     
+    func fetchUnscheduledTasks() -> [TaskMO] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        
+        let priorityPredicate = NSPredicate(format: "priority == %@",
+                                            argumentArray: [Priority.Urgent.rawValue])
+        
+        let scheduledPredicate = NSPredicate(format: "scheduled == %@",
+                                             argumentArray: [false])
+        
+        let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates: [priorityPredicate,
+                                                                                scheduledPredicate])
+
+        fetchRequest.predicate = allPredicates
+        
+        var fetchedTasks = [TaskMO]()
+        
+        do {
+            fetchedTasks = try context.fetch(fetchRequest) as! [TaskMO]
+        } catch {
+            fatalError("Failed to fetch tasks: \(error)")
+        }
+        
+        return fetchedTasks
+    }
+    
     func getTaskAge(task: TaskMO) -> Int {
         let now = Date()
         let diff = now.timeIntervalSince(task.createdDate! as Date)
