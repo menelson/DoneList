@@ -75,12 +75,14 @@ class TestScheduleTask: XCTestCase {
     func testAddTodayEventsToAvailability() {
         // Given
         //let hour = Calendar.current.component(.hour, from: (event?.startDate)!)
+        let hour = 5
+        _ = scheduleService
         
         // When
         var availability = scheduleService?.getAvailability()
         
         // Then
-        let dictionary = availability?[5] as! [String: Any]
+        let dictionary = availability?[hour] as! [String: Any]
         XCTAssert(dictionary["event"] as? String != "", "Event should not equal empty string")
         XCTAssert(dictionary["blocked"] as? String == "true", "Event slot should be blocked")
     }

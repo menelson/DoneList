@@ -185,4 +185,10 @@ extension AgendaViewController: UITableViewDataSource {
 
 extension AgendaViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == taskTableView {
+            performSegue(withIdentifier: "TaskScheduleSegue", sender: self)
+        }
+    }
+    
 }
