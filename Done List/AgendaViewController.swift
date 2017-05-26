@@ -118,7 +118,7 @@ class AgendaViewController: UIViewController {
     
     func setupTodayTasks() {
         self.todayTasks = [TaskMO]()
-        self.todayTasks = TaskController.sharedInstance.fetchTasks(byPriority: Priority.Urgent)
+        self.todayTasks = TaskController.sharedInstance.fetchUnscheduledTasks()
         self.taskTableView?.reloadData()
     }
     
@@ -170,6 +170,7 @@ extension AgendaViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             cell.textLabel?.text = todayTasks[indexPath.row].name
+            
             return cell
         }
         

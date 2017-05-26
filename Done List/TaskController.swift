@@ -39,6 +39,7 @@ class TaskController: NSObject {
         task.priorityInt = Int32(Priority.Normal.hashValue)
         task.createdDate = Date() as NSDate?
         task.dueDate = Calendar.current.date(byAdding: .day, value: 7, to: Date())! as NSDate
+        task.scheduled = false
         save()
     }
     
@@ -80,6 +81,31 @@ class TaskController: NSObject {
     func fetchTasks(byPriority priority: Priority) -> [TaskMO] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "priority == %@", argumentArray: [priority.rawValue])
+        
+        var fetchedTasks = [TaskMO]()
+        
+        do {
+            fetchedTasks = try context.fetch(fetchRequest) as! [TaskMO]
+        } catch {
+            fatalError("Failed to fetch tasks: \(error)")
+        }
+        
+        return fetchedTasks
+    }
+    
+    func fetchUnscheduledTasks() -> [TaskMO] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        
+        let priorityPredicate = NSPredicate(format: "priority == %@",
+                                            argumentArray: [Priority.Urgent.rawValue])
+        
+        let scheduledPredicate = NSPredicate(format: "scheduled == %@",
+                                             argumentArray: [false])
+        
+        let allPredicates = NSCompoundPredicate(andPredicateWithSubpredicates: [priorityPredicate,
+                                                                                scheduledPredicate])
+
+        fetchRequest.predicate = allPredicates
         
         var fetchedTasks = [TaskMO]()
         
