@@ -156,12 +156,7 @@ extension TaskListViewController: UITableViewDataSource {
         
         let task = fetchedResultsController?.object(at: indexPath) as! TaskMO
         
-        cell.taskTitle.text = task.name
-        
-        let age = TaskController.sharedInstance.getTaskAge(task: task)
-        cell.taskAge.text = "\(age) days old"
-        
-        cell.taskCreatedDate.text = self.fetchFormattedTaskDueDate(task: task)
+        cell.configureView(withTask: task)
         
         return cell
     }
