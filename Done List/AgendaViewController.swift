@@ -28,7 +28,16 @@ class AgendaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        NotificationCenter
+            .default
+            .addObserver(forName: NSNotification.Name(rawValue: "CalendarAccessGranted"),
+                                               object: nil,
+                                               queue: nil) {
+                                                notification in
+                                                self.setupEventsData()
+        }
+        
         setupEventsData()
         setupTodayTasks()
         
@@ -48,6 +57,10 @@ class AgendaViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK:- UI Controls
