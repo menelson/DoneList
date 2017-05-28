@@ -46,6 +46,9 @@ class DLCalendarService {
                 DispatchQueue.main.async {
                     // Do stuff with calendars
                     _ = self.fetchUserCalendars()
+                    
+                    // Posting so that listening views can be updated
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CalendarAccessGranted"), object: nil)
                 }
             } else {
                 self.informUserOfCalendarNeed()
