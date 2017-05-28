@@ -135,13 +135,6 @@ class AgendaViewController: UIViewController {
         self.taskTableView?.reloadData()
     }
     
-    func getFormattedTimeString(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        
-        return formatter.string(from: date)
-    }
-    
 }
 
 extension AgendaViewController: UITableViewDataSource {
@@ -168,15 +161,12 @@ extension AgendaViewController: UITableViewDataSource {
                 return AgendaTableViewCell()
             }
             
-            cell.eventTitle.text = agendaEvents[indexPath.row].title
+            let event = agendaEvents[indexPath.row]
             
-            cell.startTimeLabel.text = getFormattedTimeString(date: agendaEvents[indexPath.row].startDate)
-            
-            let duration = DLCalendarService.init().calculateDuration(event: agendaEvents[indexPath.row]) / 60
-            
-            cell.durationLabel.text = "\(Int(duration)) mins"
+            cell.configureView(withEvent: event)
             
             return cell
+            
         } else if (tableView == taskTableView) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as? TaskTableViewCell else {
                 return TaskTableViewCell()
