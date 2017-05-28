@@ -156,7 +156,6 @@ extension AgendaViewController: UITableViewDataSource {
             count = agendaEvents.count
         } else if (tableView == taskTableView) {
             count = todayTasks.count
-            print("Task TV : \(count)")
         }
         
         return count
@@ -179,10 +178,13 @@ extension AgendaViewController: UITableViewDataSource {
             
             return cell
         } else if (tableView == taskTableView) {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TodayTaskCell") else {
-                return UITableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell") as? TaskTableViewCell else {
+                return TaskTableViewCell()
             }
-            cell.textLabel?.text = todayTasks[indexPath.row].name
+            
+            let task = todayTasks[indexPath.row]
+            
+            cell.configureView(withTask: task)
             
             return cell
         }

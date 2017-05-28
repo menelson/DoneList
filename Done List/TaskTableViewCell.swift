@@ -33,7 +33,7 @@ class TaskTableViewCell: UITableViewCell {
         let age = TaskController.sharedInstance.getTaskAge(task: task)
         taskAge.text = "\(age) days old"
         
-        taskCreatedDate.text = self.fetchFormattedTaskDueDate(task: task)
+        taskCreatedDate.text = "Due Date: \(self.fetchFormattedTaskDueDate(task: task))"
 
     }
     
