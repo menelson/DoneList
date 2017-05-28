@@ -149,24 +149,48 @@
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TodayTaskCell" textLabel="O1h-4V-JeS" style="IBUITableViewCellStyleDefault" id="tzq-w9-Gwf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TaskCell" id="lWQ-S0-ezh" customClass="TaskTableViewCell" customModule="Done_List" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tzq-w9-Gwf" id="QG1-TV-vUL">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lWQ-S0-ezh" id="KTi-wR-g7z">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O1h-4V-JeS">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQd-dS-QMQ">
+                                                    <rect key="frame" x="8" y="8" width="251" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="XX days old" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIe-XE-OMT">
+                                                    <rect key="frame" x="267" y="11.5" width="67" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created: 5/15/15" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KxK-Bm-aKx">
+                                                    <rect key="frame" x="16" y="26" width="94" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="KxK-Bm-aKx" firstAttribute="top" secondItem="KTi-wR-g7z" secondAttribute="top" constant="26" id="0z1-a2-VNX"/>
+                                                <constraint firstItem="KxK-Bm-aKx" firstAttribute="leading" secondItem="KTi-wR-g7z" secondAttribute="leading" constant="16" id="ISp-8t-P4I"/>
+                                                <constraint firstItem="QQd-dS-QMQ" firstAttribute="top" secondItem="KTi-wR-g7z" secondAttribute="topMargin" id="YYc-JY-iRx"/>
+                                                <constraint firstItem="QQd-dS-QMQ" firstAttribute="leading" secondItem="KTi-wR-g7z" secondAttribute="leadingMargin" id="Z3V-Fr-n1B"/>
+                                                <constraint firstItem="KIe-XE-OMT" firstAttribute="trailing" secondItem="KTi-wR-g7z" secondAttribute="trailingMargin" id="g1Z-1l-jno"/>
+                                                <constraint firstItem="KIe-XE-OMT" firstAttribute="leading" secondItem="QQd-dS-QMQ" secondAttribute="trailing" constant="8" id="g9h-vl-Rwb"/>
+                                                <constraint firstItem="KIe-XE-OMT" firstAttribute="leading" secondItem="QQd-dS-QMQ" secondAttribute="trailing" constant="8" id="iEH-bA-ak1"/>
+                                                <constraint firstItem="KIe-XE-OMT" firstAttribute="centerY" secondItem="QQd-dS-QMQ" secondAttribute="centerY" id="rLM-bC-S8C"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FMH-Jt-9id" kind="show" identifier="TaskScheduleSegue" id="FCn-PK-zZ5"/>
+                                            <outlet property="taskAge" destination="KIe-XE-OMT" id="zRF-o0-2Fi"/>
+                                            <outlet property="taskCreatedDate" destination="KxK-Bm-aKx" id="DS4-YK-dJ5"/>
+                                            <outlet property="taskTitle" destination="QQd-dS-QMQ" id="6IY-xG-wVX"/>
+                                            <segue destination="FMH-Jt-9id" kind="show" identifier="TaskScheduleSegue" id="Hgs-gm-Otk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

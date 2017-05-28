@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import EventKit
 
 class AgendaTableViewCell: UITableViewCell {
 
@@ -23,6 +24,23 @@ class AgendaTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configureView(withEvent event: EKEvent) {
+        eventTitle.text = event.title
+        
+        startTimeLabel.text = getFormattedTimeString(date: event.startDate)
+        
+        let duration = DLCalendarService.init().calculateDuration(event: event) / 60
+        
+        durationLabel.text = "\(Int(duration)) mins"
+    }
+    
+    func getFormattedTimeString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        return formatter.string(from: date)
     }
 
 }
