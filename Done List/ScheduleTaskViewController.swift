@@ -71,6 +71,10 @@ extension ScheduleTaskViewController: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Available Times"
+    }
 }
 
 extension ScheduleTaskViewController: UITableViewDelegate {
@@ -98,7 +102,9 @@ extension ScheduleTaskViewController: EKEventEditViewDelegate {
         switch action {
         case .canceled:
             controller.cancelEditing()
-            self.dismiss(animated: true, completion: nil)
+            controller.dismiss(animated: true, completion: {
+                self.dismiss(animated: true, completion: nil)
+            })
             break;
         case .saved:
             // Dismiss Edit
