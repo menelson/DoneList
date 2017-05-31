@@ -19,6 +19,8 @@ class TestTaskService: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
+        UserDefaults.standard.removeObject(forKey: TaskService.lastRunKey)
     }
     
     func testDateComparisionForOneDay() {
@@ -68,7 +70,28 @@ class TestTaskService: XCTestCase {
     }
     
     func testFetchLastRunWhenNoRunHasBeenCompleted() {
+        // Given
+        let service = TaskService()
         
+        // When
+        let lastRun = service.fetchLastRunDate()
+        
+        // Then
+        XCTAssert(lastRun == "", "lastRun should be an empty String")
+    }
+    
+    func testLastRunAddedToDefaults() {
+        // Given
+        let service = TaskService()
+        let lastRun = "5/15/2017 10:52 AM"
+        
+        // When
+        service.insertInDefaults(lastRun: lastRun)
+        
+        // Then
+        let fetched = UserDefaults.standard.string(forKey: TaskService.lastRunKey)
+        
+        XCTAssert(lastRun == fetched)
     }
     
         

@@ -10,24 +10,46 @@ import Foundation
 
 class TaskService {
     
-    // Check current month / day / year
-    // Check if already done -> Bool...?
-    // Update
-    var now: Date?
+    lazy var dateFormatter = {
+        _ -> DateFormatter in
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        return formatter
+    }()
+    
+//    var now: Date?
     static let lastRunKey: String = "LAST_RUN"
+    let userDefaults = UserDefaults.standard
     
     init() {
-        
+        _ = userDefaults.synchronize()
     }
     
     func sync() {
-        if serviceAlreadyRun() {
+        if !serviceAlreadyRun() {
             TaskController().autoUpdateTaskPriority()
+            
+            let lastRun = dateFormatter.string(from: Date())
+            
+            insertInDefaults(lastRun: lastRun)
         }
     }
     
     func serviceAlreadyRun() -> Bool {
-        return false
+        let lastRunString = fetchLastRunDate()
+        
+        if (lastRunString == "") {
+            return false
+        }
+        
+        let lastRun = dateFormatter.date(from: lastRunString)
+        
+        if (compare(lastRun: lastRun!, now: Date())) {
+            return false
+        }
+
+        return true
     }
     
     func compare(lastRun lastRunDate: Date, now: Date) -> Bool {
@@ -41,5 +63,19 @@ class TaskService {
         
         return false
     }
+    
+    func fetchLastRunDate() -> String {
+        guard let lastRun = userDefaults.string(forKey: TaskService.lastRunKey) else {
+            return ""
+        }
+        
+        return lastRun
+    }
+    
+    func insertInDefaults(lastRun: String) {
+        userDefaults.set(lastRun, forKey: TaskService.lastRunKey)
+    }
+    
+    
     
 }
