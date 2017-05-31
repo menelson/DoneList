@@ -77,6 +77,9 @@ class TaskListViewController: UIViewController {
     func initializeFetchedResultsController() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         
+        let notCompleted = NSPredicate(format: "priority != %@", argumentArray: [Priority.Completed.rawValue])
+        request.predicate = notCompleted
+        
         let nameSort = NSSortDescriptor(key: "name", ascending: true)
         let prioritySort = NSSortDescriptor(key: "priorityInt", ascending: true)
         
