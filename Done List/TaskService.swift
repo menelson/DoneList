@@ -18,7 +18,6 @@ class TaskService {
         return formatter
     }()
     
-//    var now: Date?
     static let lastRunKey: String = "LAST_RUN"
     let userDefaults = UserDefaults.standard
     
